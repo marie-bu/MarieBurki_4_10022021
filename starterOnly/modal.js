@@ -28,11 +28,13 @@ const closeBtn = document.querySelector(".close");
 
 // 2 : écouter le click + fonction pour fermer la fenêtre
 
-closeBtn.addEventListener("click", closeModal=>{
-  modalbg.style.display = "none";
-}) ;
+closeBtn.addEventListener("click", closeModal);
 
-// Validité du formulaire et messages d'erreur :
+function closeModal() {
+  modalbg.style.display = "none";
+};
+
+// Validité du formulaire, messages d'erreur, message de confirmation :
 
 // 1 : créer fonction pour ajouter les messages d'erreur
 
@@ -65,9 +67,34 @@ const regex = {
   onlyNb: /^[0-9]*$/,
 };
 
-// 5 créer fonction validate (ref. <form> HTML), remplir avec fonctions ci-dessus pour chaque input
+// 5 : créer fonction pour supprimer les données après validation du formulaire
 
-function validate() {
+function removeData() {
+  first.value = "";
+  last.value = "";
+  email.value = "";
+  birthdate.value = "";
+  quantity.value = "";
+  location1.checked = false;
+  location2.checked = false;
+  location3.checked = false;
+  location4.checked = false;
+  location5.checked = false;
+  location6.checked = false;
+  checkbox2.checked = false;
+}
+
+// 6 : message de confirmation (ajouté dans html et css) ; 
+//     le définir dans une constante et le cacher par défaut
+
+const popUpSuccess = document.querySelector(".popup-success");
+popUpSuccess.style.display = "none";
+
+// 7 : créer fonction validate (ref. <form> HTML), empêcher le comportement par défaut,
+//     remplir avec les fonctions ci-dessus
+
+function validate(event){
+  event.preventDefault();
 
   //ajout de variables > ne pas faire de return pour chaque input > faire apparaitre tous les messages d'erreur simultanément
   let isFirstValid = false; 
@@ -142,33 +169,11 @@ function validate() {
     isCheckboxValid =true;
   }
 
-/*const modalBody = document.querySelector(".modal-body");*/
-
   if (isFirstValid && isLastValid && isEmailValid && isBirthdateValid && isQuantityValid && isLocationValid && isCheckboxValid) {
-    /*modalBody.innerHTML = "Merci, nous avons bien reçu votre inscription";
-    modalBody.style.padding = "2rem";
-    modalBody.style.textAlign = "center";*/
-    //empeche la soumission du formlaire ??
-    return true;
-  } else {
-    return false;
-  }
+    removeData();
+    closeModal();
+    // afficher message de confirmation :
+    popUpSuccess.style.display = "block";
+  } 
 
 };
-
-// Message de confirmation
-//problème, disparait avec soumission formulaire, essayer avec async??
-
-const submitBtn = document.querySelector(".btn-submit");
-const main = document.querySelector("main");
-const popUpSuccess = document.createElement("div");
-
-
-submitBtn.addEventListener ("click", openSuccess=>{
-if (validate()==true) {
-    main.appendChild(popUpSuccess);
-    popUpSuccess.innerHTML = "Merci, nous avons bien reçu votre inscription.";
-    popUpSuccess.classList.add(".bground");
-    console.log("ca marche");
-  }
-});

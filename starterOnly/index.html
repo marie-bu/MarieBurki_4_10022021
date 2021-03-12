@@ -52,15 +52,15 @@
         </button>
       </div>
 
-      <div class="bground">
-        <div class="content">
+      <div class="bground style-modal">
+        <div class="content style-modal-content">
           <span class="close"></span>
           <div class="modal-body">
             <form
               name="reserve"
               action="index.html"
               method="get"
-              onsubmit="return validate();"
+              onsubmit="return validate(event);"
             >
               <div
                 class="formData">
@@ -208,6 +208,14 @@
           </div>
         </div>
       </div>
+
+      <div class="popup-success style-modal">
+        <div class="style-modal-content">
+          <p class="popup-message">Merci,</br>votre inscription a bien été prise en compte.</p>
+          <a class="popup-return-home button" href="index.html">retour à la page d'accueil</a>
+        </div>
+      </div>
+
     </main>
     <footer>
       <p class="copyrights">
